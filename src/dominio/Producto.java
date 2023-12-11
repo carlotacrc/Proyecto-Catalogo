@@ -1,28 +1,23 @@
 package dominio;
-public  class Producto {
+import java.io.Serializable;
+
+public  class Producto implements Serializable {
 
     //////atributos//////
     private String talla;
-     private double precio;
+    private double precio;
     private String color;
     private String nombre;
 
     ///////constructores//////
-    public Producto(double precio,String talla,String color, String nombre) {
+    public Producto(String talla, double precio, String color, String nombre) {
         this.talla = talla;
         this.precio = precio;
         this.color = color;
-    this.nombre = nombre;
+        this.nombre = nombre;
     }
 
     ///////getters y setters//////
-    public double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(double precio) {
-        this.precio = precio;
-    }
 
     public String getTalla() {
         return talla;
@@ -30,6 +25,14 @@ public  class Producto {
 
     public void setTalla(String talla) {
         this.talla = talla;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 
     public String getColor() {
@@ -60,14 +63,16 @@ public  class Producto {
         return nombre != null ? nombre.equals(producto.nombre) : producto.nombre == null;
     }
 
-    public void actualizar(String nombre, String color, double precio){
-        this.nombre = nombre;
+    public void actualizar(double precio, String talla, String color, String nombre){
+        this.talla = talla;
         this.precio = precio;
         this.color = color;
+        this.nombre = nombre;
     }
 
+    ///////toString//////
     public String toString(){
-        return "Nombre: " + " , Color: " + " , Talla: " + " , Precio: " + precio;
+        return "Nombre: " + nombre + " " + "Precio: " + precio + " " + "Talla: " + talla + " " + "Color: " + color;
     }
 
 }

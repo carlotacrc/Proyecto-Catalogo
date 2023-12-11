@@ -1,21 +1,26 @@
 package presentacion;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
 import dominio.Producto;
 import dominio.Tienda;
 public class Interfaz {
 
+    ////////////atributos/////////////////
     private Tienda tienda;
     private Scanner scanner;
 
+    ////////////constructores/////////////////
     public Interfaz() 
     {
         tienda = new Tienda();
         scanner = new Scanner(System.in);
     }
 
+    ////////////menus////////////////
     public void menuDuenno() 
     {
         System.out.println("========= Menú del Dueño =========");
@@ -31,18 +36,20 @@ public class Interfaz {
     public void menuCliente() 
     {
         System.out.println("========= Menú del Cliente ========");
-        System.out.println("|1. Borrar Producto               |");
+        System.out.println("|1. Comprar Producto               |");
         System.out.println("|2. Buscar Producto               |");
         System.out.println("|3. Mostrar la Tienda             |");
         System.out.println("|4. Salir                         |");
         System.out.print("Elige una opción: ");
     }
 
+    ////////////metodos////////////////
     public void iniciar() 
     {
         int opc;
-        System.out.println("Si eres dueño 1 y si eres cliente:");
+        System.out.println("Si eres dueño 1 y si eres cliente 2:");
         int escribir = scanner.nextInt();
+        cargar();
         do {
             if (escribir == 1) {
                 menuDuenno();
@@ -85,7 +92,7 @@ public class Interfaz {
     private void comandoCliente(int opcion) 
     {
         if (opcion == 1) {
-            borrarProducto();
+            comprarProducto();
             System.out.println("Has comprado el producto exitosamente.");
         } else if (opcion == 2) {
             buscarProducto();
@@ -97,6 +104,12 @@ public class Interfaz {
         } else {
             System.out.println("Opción incorrecta.");
         }
+    }
+
+    private void comprarProducto() {
+        System.out.println("¿Cúal es el nombre del producto que quiere comprar?: ");
+        String nombre = scanner.nextLine();
+        tienda.borrarProducto(nombre);
     }
 
     private void annadirProducto() 
@@ -111,56 +124,53 @@ public class Interfaz {
         System.out.print("¿Cúal es el color del producto?: ");
         String color = scanner.nextLine();
 
-        Producto producto = new Producto(precio, talla, color, nombre);
+        Producto producto = new Producto(talla, precio, color, nombre);
         tienda.annadirProducto(producto);
 
-        System.out.println("Producto añadida.");
+        System.out.println("Producto añadido.");
 
     }
     
 
-    private void borrarProducto() 
-    {
+    private void borrarProducto() {
         System.out.println("¿Cúal es el nombre del producto que quiere borrar?: ");
         String nombre = scanner.nextLine();
         tienda.borrarProducto(nombre);
     }
 
     
-    private void buscarProducto() 
-    {
+    private void buscarProducto() {
         System.out.println("¿Cúal es el nombre del producto que quiere buscar?: ");
+        String nombre = scanner.nextLine();
+        tienda.buscarProducto(nombre);
     }
 
-    private void mostrarTienda() 
-    {
+    private void mostrarTienda() {
         tienda.mostrarProductos();
     }
 
 
-    private void actualizarProducto() 
-    {
+    private void actualizarProducto() {
         System.out.println("Nombre de los productos que quiere actualizar");
         String nombre = scanner.nextLine();
         System.out.print("Ingrese el nuevo color del producto (o deje en blanco para mantener el actual): ");
         String nuevoColor = scanner.nextLine();
-
-        System.out.print("Ingrese el nuevo precio del producto (o -1 para mantener el actual): ");
+        System.out.print("Ingrese el nuevo precio de la zapatilla (o ponga -1 para mantener el actual): ");
         double nuevoPrecio = scanner.nextDouble();
         scanner.nextLine(); 
+        System.out.print("Ingrese la nueva talla del producto (o deje en blanco para mantener el actual): ");
+        String nuevaTalla = scanner.nextLine();
 
-        tienda.actualizarProducto(nombre, nuevoPrecio, nuevoColor);
+        tienda.actualizarProducto(nuevaTalla, nuevoPrecio, nuevoColor, nombre);
 
     }
-
-    private void calcularTotalTienda() 
-    {
+    
+    private void calcularTotalTienda() {
         tienda.calcularTotalTienda();
     }
 
  
-    public void grabar() 
-    {
+    public void grabar() {
         try (ObjectOutputStream obj = new ObjectOutputStream(new FileOutputStream("tienda.dat"))) 
         {
             obj.writeObject(tienda);
@@ -168,6 +178,20 @@ public class Interfaz {
         } catch (IOException e) 
         {
             System.out.println("Error al grabar la tienda: " );
+        }
+    }
+
+    public void cargar() {
+        try (ObjectInputStream obj = new ObjectInputStream(new FileInputStream("tienda.dat"))) 
+        {
+            tienda = (Tienda) obj.readObject();
+            System.out.println("La tienda se ha cargado correctamente.");
+        } catch (IOException e) 
+        {
+            System.out.println("Error al cargar la tienda: " );
+        } catch (ClassNotFoundException e) 
+        {
+            System.out.println("Error al cargar la tienda: " );
         }
     }
 }
