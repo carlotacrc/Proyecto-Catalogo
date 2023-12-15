@@ -1,3 +1,4 @@
+// Version: 1.0
 package presentacion;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -7,20 +8,30 @@ import java.io.ObjectOutputStream;
 import java.util.Scanner;
 import dominio.Producto;
 import dominio.Tienda;
+
+/**
+ * Clase que contiene la interfaz de la aplicación
+ */
 public class Interfaz {
 
-    ////////////atributos/////////////////
+    /**
+     * Atributos de la clase Interfaz
+     */
     private Tienda tienda;
     private Scanner scanner;
 
-    ////////////constructores/////////////////
+    /**
+     * Constructor de la clase Interfaz
+     */
     public Interfaz() 
     {
         tienda = new Tienda();
         scanner = new Scanner(System.in);
     }
 
-    ////////////menus////////////////
+    /**
+     * Método que muestra el menú del dueño
+     */
     public void menuDuenno() 
     {
         System.out.println("========= Menú del Dueño =========");
@@ -33,6 +44,9 @@ public class Interfaz {
         System.out.print("Elige una opción: ");
     }
 
+    /**
+     * Método que muestra el menú del cliente
+     */
     public void menuCliente() 
     {
         System.out.println("========= Menú del Cliente ========");
@@ -43,7 +57,9 @@ public class Interfaz {
         System.out.print("Elige una opción: ");
     }
 
-    ////////////metodos////////////////
+    /**
+     * Método que inicia la aplicación
+     */
     public void iniciar() 
     {
         int opc;
@@ -68,6 +84,10 @@ public class Interfaz {
         } while ((escribir == 1 && opc != 6) || (escribir == 2 && opc != 4));
     }
 
+    /**
+     * Método que ejecuta los comandos del dueño
+     * @param opcion
+     */
     private void comandosDuenno(int opcion) 
     {
         if (opcion == 1) {
@@ -89,6 +109,11 @@ public class Interfaz {
         }
     }
 
+    /**
+     * Método que ejecuta los comandos del cliente
+     * @param opcion
+     */
+
     private void comandoCliente(int opcion) 
     {
         if (opcion == 1) {
@@ -106,12 +131,19 @@ public class Interfaz {
         }
     }
 
+    /**
+     * Método que ejecuta los comandos del dueño
+     * @param opcion
+     */
     private void comprarProducto() {
         System.out.println("¿Cúal es el nombre del producto que quiere comprar?: ");
         String nombre = scanner.nextLine();
         tienda.borrarProducto(nombre);
     }
 
+    /**
+     * Método que añade un producto a la tienda
+     */
     private void annadirProducto() 
     {
         System.out.print("Nombre del producto que quiere añadir: ");
@@ -131,25 +163,34 @@ public class Interfaz {
 
     }
     
-
+    /**
+     * Método que borra un producto de la tienda
+     */
     private void borrarProducto() {
         System.out.println("¿Cúal es el nombre del producto que quiere borrar?: ");
         String nombre = scanner.nextLine();
         tienda.borrarProducto(nombre);
     }
 
-    
+    /**
+     * Método que busca un producto en la tienda
+     */
     private void buscarProducto() {
         System.out.println("¿Cúal es el nombre del producto que quiere buscar?: ");
         String nombre = scanner.nextLine();
         tienda.buscarProducto(nombre);
     }
 
+    /**
+     * Método que muestra los productos de la tienda
+     */
     private void mostrarTienda() {
         tienda.mostrarProductos();
     }
 
-
+    /**
+     * Método que actualiza un producto de la tienda
+     */
     private void actualizarProducto() {
         System.out.println("Nombre de los productos que quiere actualizar");
         String nombre = scanner.nextLine();
@@ -165,11 +206,16 @@ public class Interfaz {
 
     }
     
+    /**
+     * Método que calcula el total de la tienda
+     */
     private void calcularTotalTienda() {
         tienda.calcularTotalTienda();
     }
 
- 
+    /**
+     * Método que graba la tienda
+     */
     public void grabar() {
         try (ObjectOutputStream obj = new ObjectOutputStream(new FileOutputStream("tienda.dat"))) 
         {
@@ -181,6 +227,9 @@ public class Interfaz {
         }
     }
 
+    /**
+     * Método que carga la tienda
+     */
     public void cargar() {
         try (ObjectInputStream obj = new ObjectInputStream(new FileInputStream("tienda.dat"))) 
         {

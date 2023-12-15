@@ -1,15 +1,23 @@
+// Version: 1.0
 package dominio;
 import java.io.Serializable;
 
+/**
+ * Clase que contiene la tienda
+ */
 public  class Producto implements Serializable {
 
-    //////atributos//////
+    /**
+     * Atributos de la clase Tienda
+     */
     private String talla;
     private double precio;
     private String color;
     private String nombre;
 
-    ///////constructores//////
+    /**
+     * Constructor de la clase Tienda
+     */
     public Producto(String talla, double precio, String color, String nombre) {
         this.talla = talla;
         this.precio = precio;
@@ -17,8 +25,9 @@ public  class Producto implements Serializable {
         this.nombre = nombre;
     }
 
-    ///////getters y setters//////
-
+    /**
+     * Getter y Setter de la clase Tienda
+     */ 
     public String getTalla() {
         return talla;
     }
@@ -51,7 +60,9 @@ public  class Producto implements Serializable {
         this.nombre = nombre;
     }
 
-    ///////metodos//////
+    /**
+     * Método que compara dos productos de la tienda
+     */
     public boolean equals(Object obj){
         if (this == obj) {
             return true;
@@ -63,6 +74,9 @@ public  class Producto implements Serializable {
         return nombre != null ? nombre.equals(producto.nombre) : producto.nombre == null;
     }
 
+    /**
+     * Método que actualiza un producto de la tienda
+     */
     public void actualizar(double precio, String talla, String color, String nombre){
         this.talla = talla;
         this.precio = precio;
@@ -70,7 +84,9 @@ public  class Producto implements Serializable {
         this.nombre = nombre;
     }
 
-    ///////toString//////
+    /**
+     * Método que muestra los productos de la tienda
+     */
     public String toString(){
         return "Nombre: " + nombre + " " + "Precio: " + precio + " " + "Talla: " + talla + " " + "Color: " + color;
     }
